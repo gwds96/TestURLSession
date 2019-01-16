@@ -29,13 +29,23 @@ class ViewController: UIViewController {
     
     var news = [News]()
     
-    let imageCache = NSCache<NSString, AnyObject>()
+    let imageCache = NSCache<AnyObject, AnyObject>()
     
     func takeImage(url: String) -> UIImage {
+        var image: UIImage? = nil
+        
+        if let imageFromCache = imageCache.object(forKey: url as AnyObject) as? UIImage {
+            image = imageFromCache
+            return image!
+        }
+        
         if let urlImage = URL(string: url) {
             do {
                 let dataImage = try Data(contentsOf: urlImage)
-                return UIImage(data: dataImage)!
+                let img = UIImage(data: dataImage)!
+                imageCache.setObject(img, forKey: url as AnyObject)
+                image = img
+                return image!
             } catch let error {
                 print(error.localizedDescription)
             }
