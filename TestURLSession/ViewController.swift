@@ -11,7 +11,7 @@ struct Response: Codable, Equatable {
 }
 
 struct News: Codable, Equatable {
-    let id: Int
+    let id: Int?
     let feed: String?
     let title: String?
     let thumb_img: String?
@@ -85,8 +85,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let certifier = "TestURLCell"
         let cell = tableView.dequeueReusableCell(withIdentifier: certifier, for: indexPath) as! TestURLCell
         cell.titleLabel.text = news[indexPath.row].title ?? ""
+        cell.feedLabel.text = news[indexPath.row].feed ?? ""
         cell.thumbImage.image = takeImage(url: news[indexPath.row].thumb_img!)
         cell.textView.text = news[indexPath.row].description ?? ""
+        cell.authorLabel.text = news[indexPath.row].author ?? ""
+        if cell.authorLabel.text == "" {
+            cell.autLbl.text = ""
+        } else {
+            cell.autLbl.text = "Tác giả:"
+        }
+        if let date = news[indexPath.row].publish_date?.prefix(10) {
+            cell.dateLabel.text = "Date: \(String(date))"
+        }
         return cell
     }
     
