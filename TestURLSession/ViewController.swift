@@ -87,7 +87,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = news[indexPath.row].title ?? ""
         cell.feedLabel.text = news[indexPath.row].feed ?? ""
         cell.thumbImage.image = takeImage(url: news[indexPath.row].thumb_img!)
-        cell.textView.text = news[indexPath.row].description ?? ""
+        cell.descriptionLabel.text = news[indexPath.row].description ?? ""
         cell.authorLabel.text = news[indexPath.row].author ?? ""
         if cell.authorLabel.text == "" {
             cell.autLbl.text = ""
@@ -101,6 +101,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 300
     }
 }
